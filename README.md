@@ -2,6 +2,16 @@
 
 Basic implementation of log collector in Golang.
 
+## System Architecture
+
+### Overview
+
+![overview](./diagrams/architecture.png)
+
+### Log agent
+
+![log agent](./diagrams/log_agent_setup.png)
+
 ## Configuration
 
 Configure settings in the ini format at **_main/logagent.conf_**
@@ -49,4 +59,3 @@ cd kafka-consumer
 
 - [ ] Add etcd for storing kafka config
 - [ ] Implement Elastic Search interface
-
