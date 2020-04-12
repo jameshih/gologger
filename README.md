@@ -59,5 +59,6 @@ cd kafka-consumer
 
 ## Todo
 
+- [ ] Add test
 - [ ] Add etcd for storing kafka config
 - [ ] Implement Elastic Search interface
