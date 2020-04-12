@@ -1,3 +1,26 @@
+sudo: required
+
 language: go
+
+services:
+  - docker
+
 go:
   - master
+
+install:
+  - docker --version
+  - docker-compose --version 
+
+before_script:
+  - docker-compose -f kafka-docker/docker-compose.yml up -d 
+
+script:
+  - cd main
+  - mkdir logs
+  - cd ..
+  - cd kafka-consumer
+  - ./consumer.sh
+
+after_script:
+  - dcoker-compose stop
