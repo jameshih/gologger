@@ -34,6 +34,7 @@ docker-compose up -d
 
 // run go program
 cd ..
+go mod vendor
 cd main
 go build
 ./main
