@@ -31,7 +31,7 @@ server_ip=localhost
 server_port=9092
 ```
 
-### Execution
+## Execution
 
 - dockerized kafka is currently a single machine setup, but you can modify **_docker-compose.yml_** to run multiple kafkas in the same container, zookeeper is already included ( refer to [wurstmeister/kafka-docker](https://github.com/wurstmeister/kafka-docker) for multi machines and aws configurations)
 - a simple kafka consumer is located in the kafka-consumer folder, if it doesn't work make sure you <code>chmod +x ./consumer.sh</code> and have an active kafka running
