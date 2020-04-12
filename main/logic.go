@@ -1,11 +1,11 @@
 package main
 
 import (
-	"go_dev/projects/log_collection/kafka"
-	"go_dev/projects/log_collection/tailf"
 	"time"
 
 	"github.com/astaxie/beego/logs"
+	"github.com/jameshih/gologger/kafka"
+	"github.com/jameshih/gologger/tailf"
 )
 
 func startServer() (err error) {

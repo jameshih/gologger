@@ -3,9 +3,9 @@ package main
 import (
 	"errors"
 	"fmt"
-	"go_dev/projects/log_collection/tailf"
 
 	"github.com/astaxie/beego/config"
+	"github.com/jameshih/gologger/tailf"
 )
 
 var (

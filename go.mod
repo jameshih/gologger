@@ -1,4 +1,4 @@
-module go_dev/projects/log_collection
+module github.com/jameshih/gologger
 
 go 1.14
 
