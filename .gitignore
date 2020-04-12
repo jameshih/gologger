@@ -1,4 +1,4 @@
 .DS_Store
 examples
 main/logs/logagent.log
-vendor
+vendor/
