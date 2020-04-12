@@ -23,7 +23,7 @@ script:
   - kill $PID
   - cd ..
   - cd kafka-consumer
-  - ./consumer.sh 
+  - ./run-test.sh 
 
 after_script:
   - dcoker-compose stop
