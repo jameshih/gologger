@@ -18,15 +18,15 @@ script:
   - mkdir logs
   - go build
   - ./main &
-  - A=$!
-  - sleep 10
-  - kill $A
+  - PID=$!
+  - sleep 3
+  - kill $PID
   - cd ..
   - cd kafka-consumer
   - ./consumer.sh &
-  - B=$!
-  - sleep 3
-  - kill $B
+  - PID=$!
+  - sleep 10
+  - kill $PID
 
 after_script:
   - dcoker-compose stop
