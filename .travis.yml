@@ -17,7 +17,11 @@ script:
   - cd main
   - mkdir logs
   - go build
-  - ./main
+  - ./main &
+  - PID=$!
+  - sleep 10
+  - kill $PID
+  - cd ..
   - cd kafka-consumer
   - ./consumer.sh
 
