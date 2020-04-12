@@ -18,7 +18,8 @@ before_script:
 script:
   - cd main
   - mkdir logs
-  - cd ..
+  - go build
+  - ./main
   - cd kafka-consumer
   - ./consumer.sh
 
