@@ -1,8 +1,8 @@
 version: '2'
 
-networks:
-  app-tier:
-    driver: bridge
+#networks:
+  #app-tier:
+    #driver: bridge
 
 services:
   etcd:
@@ -13,9 +13,9 @@ services:
     ports:
       - 2379:2379
       - 2380:2380
-    networks:
-      - app-tier
-  myapp:
-    image: 'YOUR_APPLICATION_IMAGE'
-    networks:
-      - app-tier
+    #networks:
+      #- app-tier
+  #myapp:
+    #image: 'YOUR_APPLICATION_IMAGE'
+    #networks:
+      #- app-tier
