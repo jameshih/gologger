@@ -20,6 +20,8 @@ type Config struct {
 	kafkaAddr   string
 	kafkaPort   int
 	collectConf []tailf.CollectConf
+	etcdAddr    string
+	etcdKey     string
 }
 
 func loadCollectConf(conf config.Configer) (err error) {
@@ -74,6 +76,18 @@ func initConfig(configType, filename string) (err error) {
 	appConfig.kafkaPort, err = conf.Int("kafka::server_port")
 	if err != nil {
 		err = fmt.Errorf("invalid kafka port, err:%v", err)
+		return
+	}
+
+	appConfig.etcdAddr = conf.String("etcd::etcd_ip")
+	if len(appConfig.etcdAddr) == 0 {
+		err = fmt.Errorf("invalid etcd ip, err:%v", err)
+		return
+	}
+
+	appConfig.etcdKey = conf.String("etcd::etcd_key")
+	if len(appConfig.etcdKey) == 0 {
+		err = fmt.Errorf("invalid etcd key, err:%v", err)
 		return
 	}
 
