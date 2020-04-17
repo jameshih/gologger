@@ -43,9 +43,9 @@ func SetLogConfigToEtcd() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 
 	// delete log testing
-	//cli.Delete(ctx, EtcdKey)
-	//fmt.Printf("deleted %s", EtcdKey)
-	//return
+	cli.Delete(ctx, EtcdKey)
+	fmt.Printf("deleted %s", EtcdKey)
+	return
 
 	_, err = cli.Put(ctx, EtcdKey, string(data))
 	cancel()
