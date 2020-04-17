@@ -20,7 +20,7 @@ var (
 	etcdClient *EtcdClient
 )
 
-func initEtcd(add string, key string) (err error) {
+func initEtcd(addr string, key string) (collectConf []tailf.CollectConf, err error) {
 	cfg := clientv3.Config{
 		Endpoints:   []string{"localhost:2379"},
 		DialTimeout: 5 * time.Second,
@@ -38,8 +38,12 @@ func initEtcd(add string, key string) (err error) {
 	if strings.HasSuffix(key, "/") == false {
 		key = key + "/"
 	}
+	collectConf = getFromEtcd(cli, key)
+	logs.Debug("log config is %v", collectConf)
+	return
+}
 
-	var collectConf []tailf.CollectConf
+func getFromEtcd(cli *clientv3.Client, key string) (collectConf []tailf.CollectConf) {
 	for _, ip := range localIPArray {
 		etcdKey := fmt.Sprintf("%s%s", key, ip)
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
@@ -57,7 +61,6 @@ func initEtcd(add string, key string) (err error) {
 					logs.Error("unmarshal failed, err:%v", err)
 					continue
 				}
-				logs.Debug("log config is %v", collectConf)
 			}
 		}
 	}

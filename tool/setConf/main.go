@@ -30,13 +30,13 @@ func SetLogConfigToEtcd() {
 	fmt.Println("connect succ")
 	var logConfArr []tailf.CollectConf
 	logConfArr = append(logConfArr, tailf.CollectConf{
-		LogPath: "/project/nginx/logs/access.log",
-		Topic:   "nginx_log",
+		LogPath: "./logs/logagent.log",
+		Topic:   "logs",
 	})
 
 	logConfArr = append(logConfArr, tailf.CollectConf{
 		LogPath: "/project/nginx/logs/error.log",
-		Topic:   "nginx_log_err",
+		Topic:   "log_err",
 	})
 
 	data, err := json.Marshal(logConfArr)
