@@ -35,12 +35,18 @@ func SetLogConfigToEtcd() {
 	})
 
 	logConfArr = append(logConfArr, tailf.CollectConf{
-		LogPath: "/project/nginx/logs/error.log",
+		LogPath: "/project/nginx/logs/error2.log",
 		Topic:   "log_err",
 	})
 
 	data, err := json.Marshal(logConfArr)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+
+	// delete log testing
+	//cli.Delete(ctx, EtcdKey)
+	//fmt.Printf("deleted %s", EtcdKey)
+	//return
+
 	_, err = cli.Put(ctx, EtcdKey, string(data))
 	cancel()
 	if err != nil {

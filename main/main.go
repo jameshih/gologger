@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/astaxie/beego/logs"
 	"github.com/jameshih/gologger/kafka"
@@ -42,6 +43,16 @@ func main() {
 		logs.Error("init kafka failed, err:%v", err)
 		return
 	}
+
+	go func() {
+		var counter int
+		for {
+			logs.Debug("testing path: %v, count:%d", collectConf, counter)
+			counter++
+			time.Sleep(time.Second)
+		}
+	}()
+
 	logs.Debug("initialize all succ")
 	err = startServer()
 	if err != nil {
