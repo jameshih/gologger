@@ -60,6 +60,10 @@ cd kafka-consumer
 ## Todo
 
 - [ ] Add test
-- [ ] Add etcd for storing kafka config
+- [x] Add etcd for storing kafka config
 - [ ] Implement Elastic Search interface
-- [ ] dockerized etcd
+- [x] dockerized etcd
+
+## Bugs
+
+- [ ] SendToKafka won't exit when etcd key is deleted the second time during a single ./main execution
