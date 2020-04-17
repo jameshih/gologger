@@ -1,0 +1,13 @@
+server.name: kibana.docker
+server.host: 0.0.0.0
+
+elasticsearch.url: http://localhost:9200
+
+#xpack.ml.enabled: false
+#xpack.graph.enabled: false
+#xpack.security.enabled: false
+#xpack.reporting.enabled: false
+#xpack.monitoring.enabled: true
+#xpack.monitoring.collection.enabled
+#xpack.monitoring.ui.container.elasticsearch.enabled: true
+

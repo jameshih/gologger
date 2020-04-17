@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/astaxie/beego/logs"
 	"github.com/jameshih/gologger/kafka"
@@ -24,7 +25,14 @@ func main() {
 
 	logs.Debug("load conf succ, config:%v", appConfig)
 
-	err = tailf.InitTail(appConfig.collectConf, appConfig.chanSize)
+	collectConf, err := initEtcd(appConfig.etcdAddr, appConfig.etcdKey)
+	if err != nil {
+		logs.Error("init etcd failed , err:%v", err)
+		return
+	}
+	logs.Debug("initialize etcd  succ")
+
+	err = tailf.InitTail(collectConf, appConfig.chanSize)
 	if err != nil {
 		logs.Error("init tail failed, err:%v", err)
 		return
@@ -35,6 +43,15 @@ func main() {
 		logs.Error("init kafka failed, err:%v", err)
 		return
 	}
+
+	go func() {
+		var counter int
+		for {
+			logs.Debug("testing path: %v, count:%d", collectConf, counter)
+			counter++
+			time.Sleep(time.Second)
+		}
+	}()
 
 	logs.Debug("initialize all succ")
 	err = startServer()
