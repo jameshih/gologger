@@ -40,6 +40,23 @@ var (
 	tailObjMgr *TailObjMgr
 )
 
+func InitTail(conf []CollectConf, chanSize int) (err error) {
+	tailObjMgr = &TailObjMgr{
+		msgChan: make(chan *ChanMsg, 100),
+	}
+
+	if len(conf) == 0 {
+		logs.Error("invalid config for log collect, conf:%v", conf)
+		//err = fmt.Errorf("invalid config for log collect, conf:%v", conf)
+		return
+	}
+
+	for _, v := range conf {
+		createNewTask(v)
+	}
+	return
+}
+
 func GetOneLine() (msg *ChanMsg) {
 	msg = <-tailObjMgr.msgChan
 	return
@@ -105,23 +122,6 @@ func createNewTask(conf CollectConf) {
 	tailObjMgr.tailObjs = append(tailObjMgr.tailObjs, obj)
 
 	go readFromTail(obj)
-}
-
-func InitTail(conf []CollectConf, chanSize int) (err error) {
-	tailObjMgr = &TailObjMgr{
-		msgChan: make(chan *ChanMsg, 100),
-	}
-
-	if len(conf) == 0 {
-		logs.Error("invalid config for log collect, conf:%v", conf)
-		//err = fmt.Errorf("invalid config for log collect, conf:%v", conf)
-		return
-	}
-
-	for _, v := range conf {
-		createNewTask(v)
-	}
-	return
 }
 
 // read tail obj and add to channel
