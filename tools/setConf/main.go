@@ -102,7 +102,6 @@ func main() {
 	switch arg {
 	case "add":
 		setLogConfigToEtcd()
-		return
 	case "del":
 		deleteFromEtcd()
 	}
