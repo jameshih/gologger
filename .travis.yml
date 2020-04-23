@@ -23,8 +23,6 @@ script:
   - go build
   - ./main &
   - PID=$!
-  - sleep 3
-  - kill $PID
   - cd ..
   - cd elastic
   - go build 
@@ -32,6 +30,7 @@ script:
   - ESPID=$!
   - sleep 5
   - kill $ESPID
+  - kill $PID
 
 after_script:
   - dcoker-compose stop
