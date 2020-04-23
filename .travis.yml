@@ -14,6 +14,10 @@ before_script:
   - docker-compose -f docker/docker-compose.yml up -d 
 
 script:
+  - cd tools/setConf
+  - go build 
+  - ./setConf add
+  - cd ../..
   - cd main
   - mkdir logs
   - go build
@@ -22,8 +26,12 @@ script:
   - sleep 3
   - kill $PID
   - cd ..
-  - cd kafka-consumer
-  - ./run-test.sh 
+  - cd elastic
+  - go build 
+  - ./elastic &
+  - PID=$!
+  - sleep 5
+  - kill $PID
 
 after_script:
   - dcoker-compose stop
