@@ -21,5 +21,5 @@ func init() {
 			}
 		}
 	}
-	fmt.Println(localIPArray)
+	// fmt.Println(localIPArray)
 }

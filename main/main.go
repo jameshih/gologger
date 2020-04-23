@@ -49,7 +49,7 @@ func main() {
 		for {
 			logs.Debug("testing count:%d", counter)
 			counter++
-			time.Sleep(time.Second * 10)
+			time.Sleep(time.Second * 1)
 		}
 	}()
 

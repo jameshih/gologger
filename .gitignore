@@ -1,5 +1,13 @@
 .DS_Store
 examples
-main/logs/logagent.log
 vendor
 default.etcd
+
+# system logs
+main/logs/logagent.log
+elastic/system.log
+
+# binaries
+main/main
+tools/setConf/setConf
+elastic/elastic

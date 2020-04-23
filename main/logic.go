@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/astaxie/beego/logs"
@@ -10,6 +11,7 @@ import (
 
 func startServer() (err error) {
 	var msg *tailf.ChanMsg
+	fmt.Println("serving logger")
 	for {
 		msg = tailf.GetOneLine()
 		err = sendToKafka(msg)
