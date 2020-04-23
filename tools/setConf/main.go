@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"time"
@@ -16,17 +17,24 @@ const (
 	EtcdKey = "/backend/logagent/config/10.0.1.6"
 )
 
-func SetLogConfigToEtcd() {
+var (
+	cli *clientv3.Client
+	err error
+)
+
+func init() {
 	cfg := clientv3.Config{
 		Endpoints:   []string{"http://127.0.0.1:2379"},
 		DialTimeout: 2 * time.Second,
 	}
-	cli, err := clientv3.New(cfg)
-	defer cli.Close()
+	cli, err = clientv3.New(cfg)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
+}
+
+func setLogConfigToEtcd() {
 	fmt.Println("connect succ")
 	var logConfArr []tailf.CollectConf
 	logConfArr = append(logConfArr, tailf.CollectConf{
@@ -34,18 +42,13 @@ func SetLogConfigToEtcd() {
 		Topic:   "logs",
 	})
 
-	logConfArr = append(logConfArr, tailf.CollectConf{
-		LogPath: "/project/nginx/logs/error2.log",
-		Topic:   "log_err",
-	})
+	// logConfArr = append(logConfArr, tailf.CollectConf{
+	// 	LogPath: "/project/nginx/logs/error2.log",
+	// 	Topic:   "log_err",
+	// })
 
 	data, err := json.Marshal(logConfArr)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-
-	// delete log testing
-	//cli.Delete(ctx, EtcdKey)
-	//fmt.Printf("deleted %s", EtcdKey)
-	//return
 
 	_, err = cli.Put(ctx, EtcdKey, string(data))
 	cancel()
@@ -84,6 +87,23 @@ func SetLogConfigToEtcd() {
 
 }
 
+func deleteFromEtcd() {
+	// delete log testing
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	cli.Delete(ctx, EtcdKey)
+	fmt.Printf("deleted %s", EtcdKey)
+	cancel()
+	return
+}
+
 func main() {
-	SetLogConfigToEtcd()
+	flag.Parse()
+	arg := flag.Arg(0)
+	switch arg {
+	case "add":
+		setLogConfigToEtcd()
+	case "del":
+		deleteFromEtcd()
+	}
+	defer cli.Close()
 }

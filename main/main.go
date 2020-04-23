@@ -47,9 +47,9 @@ func main() {
 	go func() {
 		var counter int
 		for {
-			logs.Debug("testing path: %v, count:%d", collectConf, counter)
+			logs.Debug("testing count:%d", counter)
 			counter++
-			time.Sleep(time.Second)
+			time.Sleep(time.Second * 10)
 		}
 	}()
 

@@ -88,10 +88,8 @@ func watchKey(key string) {
 	//logs.Debug("key:%s", key)
 	for {
 		rch := cli.Watch(context.Background(), key)
-
 		var collectConf []tailf.CollectConf
 		var getConfSucc = true
-		fmt.Print(getConfSucc)
 		for wresp := range rch {
 			for _, ev := range wresp.Events {
 				if ev.Type == mvccpb.DELETE {
