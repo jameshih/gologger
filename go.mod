@@ -18,7 +18,8 @@ require (
 	github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644 // indirect
 	go.etcd.io/etcd v3.3.20+incompatible
 	go.uber.org/zap v1.14.1 // indirect
-	golang.org/x/net v0.0.0-20200324143707-d3edc9973b7e // indirect
+	golang.org/x/crypto v0.0.0-20200423211502-4bdfaf469ed5 // indirect
+	golang.org/x/net v0.0.0-20200421231249-e086a090c8fd // indirect
 	golang.org/x/sys v0.0.0-20200413165638-669c56c373c4 // indirect
 	google.golang.org/grpc v1.26.0 // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
