@@ -12,5 +12,6 @@ type AppController struct {
 func (p *AppController) Index() {
 
 	logs.Debug("enter app controller")
-	p.TplName = "index/index.html"
+	p.Layout = "layout/layout.html"
+	p.TplName = "app/index.html"
 }

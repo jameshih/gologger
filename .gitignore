@@ -11,3 +11,4 @@ elastic/system.log
 main/main
 tools/setConf/setConf
 elastic/elastic
+client/run

@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "github..com/jameshih/gologger/client/router"
 	"github.com/astaxie/beego"
+	_ "github.com/jameshih/gologger/client/router"
 )
 
 func main() {
