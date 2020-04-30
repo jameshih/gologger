@@ -66,8 +66,9 @@ cd kafka-consumer
 
 - [ ] Add test
 - [x] Add etcd for storing kafka config
-- [ ] Implement Elastic Search interface
+- [x] Implement Elastic Search interface
 - [x] dockerized etcd
+- [x] added mysql
 
 ## Bugs
 
