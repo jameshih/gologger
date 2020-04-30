@@ -58,7 +58,8 @@ func (p *AppController) AppCreate() {
 
 	_, err := model.InsertAppInfo(appInfo)
 	if err != nil {
-		p.Data["Error"] = fmt.Sprintf("failed to create new project, db busy")
+		// p.Data["Error"] = fmt.Sprintf("failed to create new project, db busy")
+		p.Data["Error"] = err
 		p.TplName = "app/error.html"
 		logs.Warn("invalid params")
 		return
