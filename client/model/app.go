@@ -1,6 +1,8 @@
 package model
 
 import (
+	_ "github.com/go-sql-driver/mysql"
+
 	"github.com/astaxie/beego/logs"
 	"github.com/jmoiron/sqlx"
 )
@@ -18,7 +20,12 @@ var (
 	Db *sqlx.DB
 )
 
-func InitDb(db *sqlx.DB) {
+func init() {
+	db, err := sqlx.Open("mysql", "root:toor@tcp(127.0.0.1:3306)/app")
+	if err != nil {
+		logs.Error("failed to connect to mysql, err: %v", err)
+		return
+	}
 	Db = db
 }
 

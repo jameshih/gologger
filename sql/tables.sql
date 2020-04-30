@@ -3,7 +3,7 @@ create table tbl_app_info (
   app_name varchar(1024) not null, 
   app_type varchar(64) not null, 
   create_time TIMESTAMP default current_timestamp,
-  develop_path varchar(256) not null,
+  develop_path varchar(256) not null
 ) engine=innodb default charset=utf8 auto_increment=1;
 
 create table tbl_app_ip (

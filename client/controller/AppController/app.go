@@ -17,15 +17,16 @@ func (p *AppController) AppList() {
 
 	logs.Debug("enter app controller")
 	p.Layout = "layout/layout.html"
-	//appList, err := model.GetAllInfo()
-	//if err != nil {
-	//p.Data["Error"] = fmt.Sprintf("server busy...")
-	//p.TplName = "app/err.html"
-	//logs.Warn("get app list failed, err: %v", err)
-	//return
-	//}
-	//logs.Debug("get app list succ, data:%v", appList)
-	//p.Data["appList"] = appList
+	appList, err := model.GetAllInfo()
+	if err != nil {
+		// p.Data["Error"] = fmt.Sprintf("server busy...")
+		p.Data["Error"] = err
+		p.TplName = "app/error.html"
+		logs.Warn("get app list failed, err: %v", err)
+		return
+	}
+	logs.Debug("get app list succ, data:%v", appList)
+	p.Data["appList"] = appList
 	p.TplName = "app/index.html"
 }
 
