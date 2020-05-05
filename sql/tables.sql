@@ -1,3 +1,10 @@
+-- name: create-app-database
+create database app;
+
+-- name: use-app-database
+use app;
+
+-- name: create-app-info-table
 create table tbl_app_info (
   app_id int auto_increment primary key,
   app_name varchar(1024) not null, 
@@ -6,17 +13,18 @@ create table tbl_app_info (
   develop_path varchar(256) not null
 ) engine=innodb default charset=utf8 auto_increment=1;
 
+-- name: create-app-ip-table
 create table tbl_app_ip (
   app_id int, 
   ip varchar(64),
   Key app_id_ip_index (app_id, ip)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-
+-- name: create-log-info-table
 create table tbl_log_info (
   log_id int auto_increment primary key,
   app_id varchar(1024) not null, 
-  log_path varchar(64) not null, 
+  log_path varchar(256) not null, 
   topic varchar(1024) not null,
   create_time TIMESTAMP default current_timestamp,
   status tinyint default 1

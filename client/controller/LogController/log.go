@@ -62,5 +62,24 @@ func (p *LogController) LogCreate() {
 		return
 	}
 
+	iplist, err := model.GetIPInfoByName(appName)
+	if err != nil {
+		p.Data["Error"] = err
+		p.TplName = "layout/error.html"
+		logs.Warn("invalid params")
+		return
+	}
+
+	keyStr := "/backend/logagent/config/%s"
+
+	for _, ip := range iplist {
+		key := fmt.Sprintf(keyStr, ip)
+		err = model.SetLogConfigToEtcd(key, logInfo)
+		if err != nil {
+			logs.Warn("set key in etcd failed, error: %v", err)
+			continue
+		}
+	}
+
 	p.Redirect("/log/list", 302)
 }

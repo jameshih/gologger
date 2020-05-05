@@ -12,12 +12,14 @@ require (
 	github.com/elastic/go-elasticsearch v0.0.0
 	github.com/elastic/go-elasticsearch/v8 v8.0.0-20200408073057-6f36a473b19f // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/gchaincl/dotsql v1.0.0
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.0 // indirect
 	github.com/google/uuid v1.1.1 // indirect
 	github.com/hpcloud/tail v1.0.0
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644 // indirect
+	github.com/swithek/dotsqlx v1.0.0
 	go.etcd.io/etcd v3.3.20+incompatible
 	go.uber.org/zap v1.14.1 // indirect
 	golang.org/x/crypto v0.0.0-20200423211502-4bdfaf469ed5 // indirect

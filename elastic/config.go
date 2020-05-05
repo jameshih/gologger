@@ -34,7 +34,7 @@ func initConfig(confType string, filename string) (err error) {
 		logConfig.LogLevel = "debug"
 	}
 
-	logConfig.LogPath = conf.String("logs::log_path")
+	logConfig.LogPath = conf.String("logs::es_log_path")
 
 	// set default val for LogPath is not define in config file
 	if len(logConfig.LogPath) == 0 {

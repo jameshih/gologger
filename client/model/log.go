@@ -1,8 +1,15 @@
 package model
 
 import (
+	"context"
+	"encoding/json"
+	"time"
+
 	"github.com/astaxie/beego/logs"
+	"github.com/coreos/etcd/etcdserver/api/v3rpc/rpctypes"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jameshih/gologger/tailf"
+	"go.etcd.io/etcd/clientv3"
 )
 
 type LogInfo struct {
@@ -13,6 +20,14 @@ type LogInfo struct {
 	CreateTime string `db:"create_time"`
 	LogPath    string `db:"log_path"`
 	Topic      string `db:"topic"`
+}
+
+var (
+	etcdClient *clientv3.Client
+)
+
+func InitEtcd(cli *clientv3.Client) {
+	etcdClient = cli
 }
 
 func GetAllLogInfo() (loglist []LogInfo, err error) {
@@ -57,5 +72,33 @@ func CreateLog(info *LogInfo) (err error) {
 		logs.Warn("create log failed, Db.LastInsertId error: %v", err)
 		return
 	}
+	return
+}
+
+func SetLogConfigToEtcd(etcdKey string, info *LogInfo) (err error) {
+	var logConfArr []tailf.CollectConf
+	logConfArr = append(logConfArr, tailf.CollectConf{
+		LogPath: info.LogPath,
+		Topic:   info.Topic,
+	})
+
+	data, err := json.Marshal(logConfArr)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+
+	_, err = etcdClient.Put(ctx, etcdKey, string(data))
+	cancel()
+	if err != nil {
+		switch err {
+		case context.Canceled:
+			logs.Warn("ctx is canceled by another routine: %v", err)
+		case context.DeadlineExceeded:
+			logs.Warn("ctx is attached with a deadline is exceeded: %v", err)
+		case rpctypes.ErrEmptyKey:
+			logs.Warn("client-side error: %v", err)
+		default:
+			logs.Warn("bad cluster endpoints, which are not etcd servers: %v", err)
+		}
+	}
+	logs.Debug("put etcd succ, data: %v", string(data))
 	return
 }

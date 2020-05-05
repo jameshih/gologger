@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	filename := "./logagent.conf"
+	filename := "./conf/logagent.conf"
 	err := initConfig("ini", filename)
 	if err != nil {
 		fmt.Printf("load conf failed, err:%v\n", err)

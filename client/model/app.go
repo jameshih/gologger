@@ -20,23 +20,42 @@ var (
 	Db *sqlx.DB
 )
 
-func init() {
-	db, err := sqlx.Open("mysql", "root:toor@tcp(127.0.0.1:3306)/app")
-	if err != nil {
-		logs.Error("failed to connect to mysql, err: %v", err)
-		return
-	}
+func InitDb(db *sqlx.DB) {
 	Db = db
 }
 
 func GetAllInfo() (appInfo []AppInfo, err error) {
 	err = Db.Select(&appInfo, "select app_id, app_name, app_type, create_time, develop_path from tbl_app_info")
 	if err != nil {
-		logs.Warn("exec failed, ", err)
+		logs.Warn("get all app info failed, error: %v", err)
 		return
 	}
 	return
 }
+
+func GetIPInfoByName(appName string) (iplist []string, err error) {
+	var appId []int
+	err = Db.Select(&appId, "select app_id from tbl_app_info where app_name=?", appName)
+	if err != nil || len(appId) == 0 {
+		logs.Warn("get app_id failed, error: %v", err)
+		return
+	}
+	err = Db.Select(&iplist, "select ip from tbl_app_ip where app_id=?", appId[0])
+	if err != nil {
+		logs.Warn("get ip info by appid failed, error: %v", err)
+		return
+	}
+	return
+}
+
+//func GetIPInfoById(appId int) (iplist []string, err error) {
+//err = Db.Select(&iplist, "select ip from tbl_app_ip where app_id=?", appId)
+//if err != nil {
+//logs.Warn("get ip info by appid failed, error: %v", err)
+//return
+//}
+//return
+//}
 
 func InsertAppInfo(appInfo *AppInfo) (id int64, err error) {
 	conn, err := Db.Begin()

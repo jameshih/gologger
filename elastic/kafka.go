@@ -35,7 +35,7 @@ func initKafka(addr string, port int, topic string) (err error) {
 
 func fetchFromKafka(pc sarama.PartitionConsumer, topic string, wg *sync.WaitGroup) {
 	for msg := range pc.Messages() {
-		logs.Debug("Partition:%d, Offset:%d, Key:%s, Value:%s\n", msg.Partition, msg.Offset, string(msg.Key), string(msg.Value))
+		//logs.Debug("Partition:%d, Offset:%d, Key:%s, Value:%s\n", msg.Partition, msg.Offset, string(msg.Key), string(msg.Value))
 		err := sendToES(topic, msg.Value)
 		if err != nil {
 			logs.Debug("send to es failed, err: %v", err)

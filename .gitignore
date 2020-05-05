@@ -4,11 +4,12 @@ vendor
 default.etcd
 
 # system logs
-main/logs/logagent.log
-elastic/system.log
+exe/logs/logagent.log
+exe/logs/elastic.log
 
 # binaries
-main/main
 tools/setConf/setConf
-elastic/elastic
 client/run
+sql/sql
+exe/logagent
+exe/elastic
