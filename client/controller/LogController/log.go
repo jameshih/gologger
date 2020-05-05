@@ -1,23 +1,22 @@
-package AppController
+package LogController
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"github.com/jameshih/gologger/client/model"
 )
 
-type AppController struct {
+type LogController struct {
 	beego.Controller
 }
 
-func (p *AppController) AppList() {
+func (p *LogController) LogList() {
 
-	logs.Debug("enter app controller")
+	logs.Debug("enter log controller")
 	p.Layout = "layout/layout.html"
-	appList, err := model.GetAllInfo()
+	loglist, err := model.GetAllLogInfo()
 	if err != nil {
 		// p.Data["Error"] = fmt.Sprintf("server busy...")
 		p.Data["Error"] = err
@@ -25,38 +24,36 @@ func (p *AppController) AppList() {
 		logs.Warn("get app list failed, err: %v", err)
 		return
 	}
-	logs.Debug("get app list succ, data:%v", appList)
-	p.Data["appList"] = appList
-	p.TplName = "app/index.html"
+	logs.Debug("get app list succ, data:%v", loglist)
+	p.Data["loglist"] = loglist
+	p.TplName = "log/index.html"
 }
 
-func (p *AppController) AppApply() {
+func (p *LogController) LogApply() {
 	logs.Debug("enter index controller")
 	p.Layout = "layout/layout.html"
-	p.TplName = "app/apply.html"
+	p.TplName = "log/apply.html"
 }
 
-func (p *AppController) AppCreate() {
+func (p *LogController) LogCreate() {
 	logs.Debug("enter index controller")
 	appName := p.GetString("app_name")
-	appType := p.GetString("app_type")
-	developPath := p.GetString("develop_path")
-	ipstr := p.GetString("iplist")
+	logPath := p.GetString("log_path")
+	topic := p.GetString("topic")
 
-	if len(appName) == 0 || len(appType) == 0 || len(developPath) == 0 || len(ipstr) == 0 {
+	if len(appName) == 0 || len(logPath) == 0 || len(topic) == 0 {
 		p.Data["Error"] = fmt.Sprintf("invalid params")
 		p.TplName = "layout/error.html"
 		logs.Warn("invalid params")
 		return
 	}
 
-	appInfo := &model.AppInfo{}
-	appInfo.AppName = appName
-	appInfo.AppType = appType
-	appInfo.DevelopPath = developPath
-	appInfo.IP = strings.Split(ipstr, ",")
+	logInfo := &model.LogInfo{}
+	logInfo.AppName = appName
+	logInfo.LogPath = logPath
+	logInfo.Topic = topic
 
-	_, err := model.InsertAppInfo(appInfo)
+	err := model.CreateLog(logInfo)
 	if err != nil {
 		// p.Data["Error"] = fmt.Sprintf("failed to create new project, db busy")
 		p.Data["Error"] = err
@@ -65,5 +62,5 @@ func (p *AppController) AppCreate() {
 		return
 	}
 
-	p.Redirect("/app/list", 302)
+	p.Redirect("/log/list", 302)
 }
