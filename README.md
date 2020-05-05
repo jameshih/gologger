@@ -64,11 +64,14 @@ cd kafka-consumer
 
 ## Todo
 
-- [ ] Add test
 - [x] Add etcd for storing kafka config
 - [x] Implement Elastic Search interface
 - [x] dockerized etcd
 - [x] added mysql
+- [x] added client
+- [x] connect etcd to client
+- [ ] Add test
+- [ ] update travis
 
 ## Bugs
 
